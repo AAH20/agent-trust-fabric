@@ -2,9 +2,17 @@
 
 [![Verify reference kernel](https://github.com/AAH20/agent-trust-fabric/actions/workflows/verify.yml/badge.svg)](https://github.com/AAH20/agent-trust-fabric/actions/workflows/verify.yml)
 
-**A framework-neutral reference kernel for agent authority, local evidence, and reproducible Agent Passports.** It is the first open-source slice of a proposed A2Z SOC ecosystem. It evaluates exported action intents from LangGraph, CrewAI, Paperclip, or another runtime against scoped authority and emits a tamper-evident local receipt chain.
+**An inspectable agent-simulation and trust reference stack.** It combines a reproducible, paired-intervention scenario engine with a framework-neutral authority and local evidence kernel. The simulation engine explores possible outcomes and tradeoffs; the trust kernel evaluates exported action intents from LangGraph, CrewAI, Paperclip, or another runtime against scoped authority and emits a tamper-evident local receipt chain.
 
-This repository does **not** execute tools, connect to production agents, authenticate principals, certify compliance, or prove an external event really occurred. Source names in the fixture identify illustrative event producers; live SDK and webhook integrations remain future work. The output status is deliberately `INTEGRITY_ONLY_NOT_AUTHENTICATED`.
+This repository does **not** execute tools, connect to production agents, authenticate principals, certify compliance, forecast real outcomes, or prove an external event really occurred. Source names in the fixture identify illustrative event producers; live SDK and webhook integrations remain future work. The trust output status is deliberately `INTEGRITY_ONLY_NOT_AUTHENTICATED`.
+
+## Run a scenario experiment
+
+```bash
+python3 -m agent_trust_fabric.cli simulate fixtures/support-rollout-scenario.json --output /tmp/support-simulation.json
+```
+
+The synthetic support-rollout case models 240 heterogeneous users on a small-world social graph over 12 steps and 40 runs. It compares a quality investment and discount campaign against the baseline with shared random draws. The result reports adoption, resolved requests, net value in **model units**, run quantiles, and paired effects. The scenario digest and seed make the experiment replayable. An optional observed-outcome input computes baseline MAE against a naive comparator; only genuine held-out observations can support predictive claims. See the [engine design and benchmark plan](docs/SCENARIO_ENGINE.md) and [scenario contract](schemas/scenario.schema.json).
 
 ## Run the four-event demo
 
@@ -27,6 +35,9 @@ An offline [HTML Agent Passport](demo/refund-agent-passport.html) is included fo
 
 ```mermaid
 flowchart LR
+  S[Scenario assumptions and segments] --> T[Paired multi-agent experiment engine]
+  T --> U[Outcomes, uncertainty, cost and backtest]
+  U -. proposed decision adapter .-> B
   A[LangGraph / CrewAI / Paperclip / generic exports] --> B[Canonical action-intent contract]
   B --> C[Scoped authority and approval evaluator]
   C --> D[Local hash-chained receipts]
@@ -58,7 +69,7 @@ This is **not a production policy decision point**. Timestamps and identities ar
 
 ## Product path
 
-The project should become the public contract and verification kernel of a larger product, not another general-purpose orchestration framework. [LangGraph](https://docs.langchain.com/oss/python/langgraph/overview) can own durable execution; [CrewAI](https://github.com/crewAIInc/crewAI) and [Paperclip](https://github.com/PaperclipAI/paperclip) can own their agent and organization workflows. A2Z adds authority, observable outcomes, and independently inspectable evidence across them. [MiroFish](https://github.com/666ghj/MiroFish) belongs in a separately licensed simulation adapter whose results are labelled scenarios, never measured forecasts or operational authorization.
+The public project now has two complementary kernels: an inspectable scenario engine for decisions and a reference authority/evidence kernel for actions. [LangGraph](https://docs.langchain.com/oss/python/langgraph/overview) can own durable execution; [CrewAI](https://github.com/crewAIInc/crewAI) and [Paperclip](https://github.com/PaperclipAI/paperclip) can own their agent and organization workflows. A2Z adds reproducible counterfactual experiments, authority checks, observable outcomes, and independently inspectable evidence across them. [MiroFish](https://github.com/666ghj/MiroFish) is a comparison target for future external benchmarks. This repository does not incorporate its AGPL-3.0 code or claim superior predictive performance.
 
 The [commercialization and rollout plan](docs/PRODUCT_PLAN.md) defines the proposed open-source/commercial boundary, a Chatbase-like customer-agent wedge, acceptance gates, and unit-economics instrumentation. The [integration gates](docs/INTEGRATIONS_AND_RELEASE_GATES.md) spell out how LangGraph, CrewAI, Paperclip, LangSmith, and simulation systems become supported without treating a passive trace as runtime enforcement. These are plans and targets, not claims of deployed adoption or revenue.
 
