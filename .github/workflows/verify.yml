@@ -16,3 +16,4 @@ jobs:
       - run: python -m agent_trust_fabric.cli benchmark fixtures/refund-agent.json
       - run: python -m agent_trust_fabric.cli run fixtures/refund-agent.json --output /tmp/agent-passport.json
       - run: python -m agent_trust_fabric.cli verify /tmp/agent-passport.json --case fixtures/refund-agent.json
+      - run: python -m agent_trust_fabric.cli simulate fixtures/support-rollout-scenario.json --output /tmp/support-simulation.json
