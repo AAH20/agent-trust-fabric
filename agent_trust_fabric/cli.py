@@ -9,6 +9,7 @@ from pathlib import Path
 
 from .core import run_case, verify
 from .report import render_html, render_markdown
+from .simulation import simulate
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -23,8 +24,19 @@ def main(argv: list[str] | None = None) -> int:
     check.add_argument("--case", type=Path, required=True)
     bench = sub.add_parser("benchmark", help="Check declared expected decisions against the reference policy")
     bench.add_argument("case", type=Path)
+    scenario = sub.add_parser("simulate", help="Run a paired, reproducible synthetic scenario experiment")
+    scenario.add_argument("scenario", type=Path)
+    scenario.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
     try:
+        if args.command == "simulate":
+            result = simulate(json.loads(args.scenario.read_text(encoding="utf-8")))
+            output = json.dumps(result, indent=2, ensure_ascii=False) + "\n"
+            if args.output:
+                args.output.write_text(output, encoding="utf-8")
+            else:
+                sys.stdout.write(output)
+            return 0
         if args.command == "run":
             result = run_case(json.loads(args.case.read_text(encoding="utf-8")))
             if args.format == "markdown":
