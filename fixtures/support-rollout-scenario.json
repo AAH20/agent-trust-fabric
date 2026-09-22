@@ -1,0 +1,20 @@
+{
+  "schema_version": "0.1.0",
+  "scenario_id": "synthetic-support-rollout",
+  "population": 240,
+  "steps": 12,
+  "runs": 40,
+  "seed": 2815,
+  "network": {"neighbors": 6, "rewire_probability": 0.08},
+  "initial_adoption": 0.05,
+  "segments": [
+    {"name": "cost-sensitive", "share": 0.5, "interest": -1.6, "price_sensitivity": 1.4, "peer_influence": 0.8, "quality_sensitivity": 1.2, "churn": 0.08},
+    {"name": "quality-sensitive", "share": 0.3, "interest": -1.9, "price_sensitivity": 0.7, "peer_influence": 1.0, "quality_sensitivity": 2.4, "churn": 0.05},
+    {"name": "early-adopter", "share": 0.2, "interest": -0.8, "price_sensitivity": 0.5, "peer_influence": 0.3, "quality_sensitivity": 1.0, "churn": 0.04}
+  ],
+  "baseline": {"quality": 0.7, "price": 0.3, "marketing": 0.1, "failure_rate": 0.1, "unit_cost": 0.12, "revenue_per_active": 0.35},
+  "interventions": [
+    {"name": "quality-investment", "start_step": 4, "changes": {"quality": 0.88, "failure_rate": 0.04, "unit_cost": 0.18}},
+    {"name": "discount-campaign", "start_step": 4, "changes": {"price": 0.15, "marketing": 0.25, "revenue_per_active": 0.25}}
+  ]
+}
