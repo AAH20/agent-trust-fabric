@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/AAH20/agent-trust-fabric/blob/main/schemas/scenario.schema.json",
+  "title": "Synthetic support rollout scenario",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scenario_id", "population", "steps", "runs", "seed", "network", "initial_adoption", "segments", "baseline", "interventions"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "scenario_id": {"type": "string", "minLength": 1, "maxLength": 100},
+    "population": {"type": "integer", "minimum": 10, "maximum": 5000},
+    "steps": {"type": "integer", "minimum": 1, "maximum": 100},
+    "runs": {"type": "integer", "minimum": 1, "maximum": 200},
+    "seed": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+    "network": {"type": "object", "additionalProperties": false, "required": ["neighbors", "rewire_probability"], "properties": {"neighbors": {"type": "integer", "minimum": 2, "maximum": 30, "multipleOf": 2}, "rewire_probability": {"type": "number", "minimum": 0, "maximum": 1}}},
+    "initial_adoption": {"type": "number", "minimum": 0, "maximum": 1},
+    "segments": {"type": "array", "minItems": 1, "maxItems": 20, "items": {"$ref": "#/$defs/segment"}},
+    "baseline": {"$ref": "#/$defs/parameters"},
+    "interventions": {"type": "array", "maxItems": 5, "items": {"type": "object", "additionalProperties": false, "required": ["name", "start_step", "changes"], "properties": {"name": {"type": "string", "minLength": 1}, "start_step": {"type": "integer", "minimum": 1}, "changes": {"type": "object", "minProperties": 1, "additionalProperties": false, "properties": {"quality": {"type": "number", "minimum": 0, "maximum": 1}, "price": {"type": "number", "minimum": 0, "maximum": 10}, "marketing": {"type": "number", "minimum": 0, "maximum": 1}, "failure_rate": {"type": "number", "minimum": 0, "maximum": 1}, "unit_cost": {"type": "number", "minimum": 0, "maximum": 1000}, "revenue_per_active": {"type": "number", "minimum": 0, "maximum": 1000}}}}},
+    "observations": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["step", "active_share"], "properties": {"step": {"type": "integer", "minimum": 1}, "active_share": {"type": "number", "minimum": 0, "maximum": 1}}}}}
+  },
+  "$defs": {
+    "segment": {"type": "object", "additionalProperties": false, "required": ["name", "share", "interest", "price_sensitivity", "peer_influence", "quality_sensitivity", "churn"], "properties": {"name": {"type": "string", "minLength": 1}, "share": {"type": "number", "minimum": 0, "maximum": 1}, "interest": {"type": "number", "minimum": -5, "maximum": 5}, "price_sensitivity": {"type": "number", "minimum": 0, "maximum": 5}, "peer_influence": {"type": "number", "minimum": 0, "maximum": 5}, "quality_sensitivity": {"type": "number", "minimum": 0, "maximum": 5}, "churn": {"type": "number", "minimum": 0, "maximum": 1}}},
+    "parameters": {"type": "object", "additionalProperties": false, "required": ["quality", "price", "marketing", "failure_rate", "unit_cost", "revenue_per_active"], "properties": {"quality": {"type": "number", "minimum": 0, "maximum": 1}, "price": {"type": "number", "minimum": 0, "maximum": 10}, "marketing": {"type": "number", "minimum": 0, "maximum": 1}, "failure_rate": {"type": "number", "minimum": 0, "maximum": 1}, "unit_cost": {"type": "number", "minimum": 0, "maximum": 1000}, "revenue_per_active": {"type": "number", "minimum": 0, "maximum": 1000}}}
+  }
+}
