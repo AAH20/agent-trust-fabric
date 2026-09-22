@@ -1,0 +1,33 @@
+{
+  "case_id": "refund-agent-v1",
+  "description": "Synthetic cases: valid refund, expired authority, restricted RAG retrieval, approval replay",
+  "expected_decisions": ["allow", "deny", "deny", "deny"],
+  "events": [
+    {
+      "event_id": "e-001", "run_id": "run-7", "agent_id": "support-agent", "source": "langgraph",
+      "time": "2026-09-23T10:00:00Z", "action": "refund.issue", "resource": "customers/acme/orders/42",
+      "amount": 75, "cost_usd": 0.013,
+      "authority": {"agent_id": "support-agent", "run_id": "run-7", "actions": ["refund.issue", "knowledge.read"], "resource_prefix": "customers/acme/", "max_amount": 100, "expires_at": "2026-09-23T11:00:00Z"},
+      "approval": {"id": "approval-1", "agent_id": "support-agent", "run_id": "run-7", "action": "refund.issue", "resource": "customers/acme/orders/42", "amount": 75, "expires_at": "2026-09-23T10:30:00Z"}
+    },
+    {
+      "event_id": "e-002", "run_id": "run-7", "agent_id": "support-agent", "source": "crewai",
+      "time": "2026-09-23T11:01:00Z", "action": "knowledge.read", "resource": "customers/acme/policies/refunds",
+      "cost_usd": 0.002,
+      "authority": {"agent_id": "support-agent", "run_id": "run-7", "actions": ["refund.issue", "knowledge.read"], "resource_prefix": "customers/acme/", "expires_at": "2026-09-23T11:00:00Z"}
+    },
+    {
+      "event_id": "e-003", "run_id": "run-7", "agent_id": "support-agent", "source": "paperclip",
+      "time": "2026-09-23T10:05:00Z", "action": "knowledge.read", "resource": "customers/other-tenant/private/board",
+      "cost_usd": 0.004,
+      "authority": {"agent_id": "support-agent", "run_id": "run-7", "actions": ["refund.issue", "knowledge.read"], "resource_prefix": "customers/acme/", "expires_at": "2026-09-23T11:00:00Z"}
+    },
+    {
+      "event_id": "e-004", "run_id": "run-7", "agent_id": "support-agent", "source": "langgraph",
+      "time": "2026-09-23T10:06:00Z", "action": "refund.issue", "resource": "customers/acme/orders/42",
+      "amount": 75, "cost_usd": 0.01,
+      "authority": {"agent_id": "support-agent", "run_id": "run-7", "actions": ["refund.issue", "knowledge.read"], "resource_prefix": "customers/acme/", "max_amount": 100, "expires_at": "2026-09-23T11:00:00Z"},
+      "approval": {"id": "approval-1", "agent_id": "support-agent", "run_id": "run-7", "action": "refund.issue", "resource": "customers/acme/orders/42", "amount": 75, "expires_at": "2026-09-23T10:30:00Z"}
+    }
+  ]
+}
