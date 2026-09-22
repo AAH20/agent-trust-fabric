@@ -1,5 +1,7 @@
 # A2Z Agent Trust Fabric
 
+[![Verify reference kernel](https://github.com/AAH20/agent-trust-fabric/actions/workflows/verify.yml/badge.svg)](https://github.com/AAH20/agent-trust-fabric/actions/workflows/verify.yml)
+
 **A framework-neutral reference kernel for agent authority, local evidence, and reproducible Agent Passports.** It is the first open-source slice of a proposed A2Z SOC ecosystem. It evaluates exported action intents from LangGraph, CrewAI, Paperclip, or another runtime against scoped authority and emits a tamper-evident local receipt chain.
 
 This repository does **not** execute tools, connect to production agents, authenticate principals, certify compliance, or prove an external event really occurred. Source names in the fixture identify illustrative event producers; live SDK and webhook integrations remain future work. The output status is deliberately `INTEGRITY_ONLY_NOT_AUTHENTICATED`.
@@ -42,11 +44,11 @@ The intended division of responsibility is precise:
 
 | Component | Existing capability | Trust Fabric role |
 | --- | --- | --- |
-| [GRC_Claw](../GRC_Claw/README.md) | Policy and evidence control plane | Future receipt/passport export target; no live bridge in v0.1 |
-| [AI Governance Evidence Graph](../ai-governance-evidence-graph/README.md) | Assurance-case compiler | Future top-level claims about agent deployments |
-| [Identity Fabric Benchmarks](../identity-fabric-benchmarks/README.md) | Adversarial identity tests | Future portable conformance suite |
-| [AgentMesh Gateway](../ai-agent-runtime-gateway/README.md) | Execution planning | Future enforced runtime authority check |
-| [Physical AI Governor](../physical-ai-governor/README.md) | Synthetic physical-AI safety testbed | Future action-intent producer, never certification by itself |
+| [GRC_Claw](https://github.com/AAH20/GRC_Claw) | Policy and evidence control plane | Future receipt/passport export target; no live bridge in v0.1 |
+| [AI Governance Evidence Graph](https://github.com/AAH20/ai-governance-evidence-graph) | Assurance-case compiler | Future top-level claims about agent deployments |
+| [Identity Fabric Benchmarks](https://github.com/AAH20/identity-fabric-benchmarks) | Adversarial identity tests | Future portable conformance suite |
+| [AgentMesh Gateway](https://github.com/AAH20/ai-agent-runtime-gateway) | Execution planning | Future enforced runtime authority check |
+| [Physical AI Governor](https://github.com/AAH20/physical-ai-governor) | Synthetic physical-AI safety testbed | Future action-intent producer, never certification by itself |
 
 ## Contract and threat boundary
 
