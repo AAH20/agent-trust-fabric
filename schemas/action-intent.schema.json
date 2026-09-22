@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a2zsoc.com/schemas/agent-trust/action-intent/v0.1.0",
+  "title": "A2Z Agent Trust action intent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "run_id", "agent_id", "source", "time", "action", "resource", "authority"],
+  "properties": {
+    "event_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "agent_id": {"type": "string", "minLength": 1},
+    "source": {"enum": ["generic", "langgraph", "crewai", "paperclip"]},
+    "time": {"type": "string", "format": "date-time"},
+    "action": {"type": "string", "minLength": 1},
+    "resource": {"type": "string", "minLength": 1},
+    "amount": {"type": "number", "minimum": 0},
+    "cost_usd": {"type": "number", "minimum": 0},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_id", "run_id", "actions", "resource_prefix", "expires_at"],
+      "properties": {
+        "agent_id": {"type": "string", "minLength": 1},
+        "run_id": {"type": "string", "minLength": 1},
+        "actions": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "resource_prefix": {"type": "string", "minLength": 1},
+        "max_amount": {"type": "number", "minimum": 0},
+        "expires_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "agent_id", "run_id", "action", "resource", "expires_at"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "agent_id": {"type": "string", "minLength": 1},
+        "run_id": {"type": "string", "minLength": 1},
+        "action": {"type": "string", "minLength": 1},
+        "resource": {"type": "string", "minLength": 1},
+        "amount": {"type": "number", "minimum": 0},
+        "expires_at": {"type": "string", "format": "date-time"}
+      }
+    }
+  }
+}
